@@ -23,7 +23,5 @@ module ODEPrecompileTest
 
     # Setting eval_expression=false and eval_module=[this module] will ensure
     # the RGFs are put into our own cache, initialised below.
-    using RuntimeGeneratedFunctions
-    RuntimeGeneratedFunctions.init(@__MODULE__)
     const f_noeval_good = system(; eval_expression=false, eval_module=@__MODULE__)
 end

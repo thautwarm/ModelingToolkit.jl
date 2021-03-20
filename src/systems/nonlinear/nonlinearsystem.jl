@@ -128,7 +128,7 @@ function DiffEqBase.NonlinearFunction{iip}(sys::NonlinearSystem, dvs = states(sy
                                      kwargs...) where {iip}
 
     f_gen = generate_function(sys, dvs, ps; expression=Val{eval_expression}, kwargs...)
-    f_oop,f_iip = eval_expression ? (@RuntimeGeneratedFunction(ex) for ex in f_gen) : f_gen
+    f_oop,f_iip = eval_expression ? (mk_function(ex) for ex in f_gen) : f_gen
     f(u,p) = f_oop(u,p)
     f(du,u,p) = f_iip(du,u,p)
 
@@ -136,7 +136,7 @@ function DiffEqBase.NonlinearFunction{iip}(sys::NonlinearSystem, dvs = states(sy
         jac_gen = generate_jacobian(sys, dvs, ps;
                                     simplify=simplify, sparse = sparse,
                                     expression=Val{eval_expression}, kwargs...)
-        jac_oop,jac_iip = eval_expression ? (@RuntimeGeneratedFunction(ex) for ex in jac_gen) : jac_gen
+        jac_oop,jac_iip = eval_expression ? (mk_function(ex) for ex in jac_gen) : jac_gen
         _jac(u,p) = jac_oop(u,p)
         _jac(J,u,p) = jac_iip(J,u,p)
     else

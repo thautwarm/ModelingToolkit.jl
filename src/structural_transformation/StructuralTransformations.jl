@@ -23,9 +23,6 @@ using ModelingToolkit.SystemStructures
 
 using ModelingToolkit.DiffEqBase
 using ModelingToolkit.StaticArrays
-using ModelingToolkit: @RuntimeGeneratedFunction, RuntimeGeneratedFunctions
-
-RuntimeGeneratedFunctions.init(@__MODULE__)
 
 using SparseArrays
 

@@ -159,7 +159,7 @@ function gen_nlsolve(sys, eqs, vars)
         end)
 
     [
-     fname ← @RuntimeGeneratedFunction(f)
+     fname ← mk_function(f)
      DestructuredArgs(vars) ← solver_call
     ]
 end
@@ -228,7 +228,7 @@ function build_torn_function(
         end
 
         ODEFunction{true}(
-                          @RuntimeGeneratedFunction(expr),
+                          mk_function(expr),
                           sparsity = torn_system_jacobian_sparsity(sys),
                           syms = syms,
                           observed = observedfun,
@@ -321,7 +321,7 @@ function build_observed_function(
            )
     ) |> Code.toexpr
 
-    expression ? ex : @RuntimeGeneratedFunction(ex)
+    expression ? ex : mk_function(ex)
 end
 
 struct ODAEProblem{iip}

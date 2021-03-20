@@ -265,7 +265,7 @@ function build_explicit_observed_function(
            )
     ) |> toexpr
 
-    expression ? ex : @RuntimeGeneratedFunction(ex)
+    expression ? ex : mk_function(ex)
 end
 
 function _eq_unordered(a, b)

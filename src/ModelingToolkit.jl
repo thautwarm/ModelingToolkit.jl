@@ -14,7 +14,6 @@ using Setfield, ConstructionBase
 using DiffEqJump
 using DataStructures
 using SpecialFunctions, NaNMath
-using RuntimeGeneratedFunctions
 using Base.Threads
 import MacroTools: splitdef, combinedef, postwalk, striplines
 import Libdl
@@ -23,8 +22,6 @@ using Base: RefValue
 import IfElse
 
 import Distributions
-
-RuntimeGeneratedFunctions.init(@__MODULE__)
 
 using RecursiveArrayTools
 
@@ -67,6 +64,11 @@ for fun in [:toexpr]
         $fun(x::AbstractFloat; kw...) = x
     end
 end
+
+import GeneralizedGenerated
+mk_function(m, ex) = GeneralizedGenerated.mk_function(m, ex)
+mk_function(ex) = GeneralizedGenerated.mk_function(@__MODULE__, ex)
+
 
 """
 $(TYPEDEF)

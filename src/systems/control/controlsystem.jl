@@ -148,8 +148,8 @@ function runge_kutta_discretize(sys::ControlSystem,dt,tspan;
     ps = parameters(sys)
     lo = get_loss(sys)
     iv = get_iv(sys)
-    f = @RuntimeGeneratedFunction(build_function([x.rhs for x in equations(sys)],sts,ctr,ps,iv,conv = ModelingToolkit.ControlToExpr(sys))[1])
-    L = @RuntimeGeneratedFunction(build_function(lo,sts,ctr,ps,iv,conv = ModelingToolkit.ControlToExpr(sys)))
+    f = mk_function(build_function([x.rhs for x in equations(sys)],sts,ctr,ps,iv,conv = ModelingToolkit.ControlToExpr(sys))[1])
+    L = mk_function(build_function(lo,sts,ctr,ps,iv,conv = ModelingToolkit.ControlToExpr(sys)))
 
     var(n, i...) = var(nameof(n), i...)
     var(n::Symbol, i...) = Sym{FnType{Tuple{symtype(iv)}, Real}}(nameof(Variable(n, i...)))
