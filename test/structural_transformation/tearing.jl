@@ -151,6 +151,7 @@ newdaesys = tearing(daesys)
 @test isequal(states(newdaesys), [x, z])
 prob = ODAEProblem(newdaesys, [x=>1.0], (0, 1.0), [p=>0.2])
 du = [0.0]; u = [1.0]; pr = 0.2; tt = 0.1
+_ = prob.f(du, u, pr, tt)
 @test (@ballocated $(prob.f)($du, $u, $pr, $tt)) == 0
 @test du ≈ [-asin(u[1] - pr * tt)] atol=1e-5
 

@@ -65,6 +65,7 @@ for fun in [:toexpr]
     end
 end
 
+export mk_function
 import GeneralizedGenerated
 mk_function(m, ex) = GeneralizedGenerated.mk_function(m, ex)
 mk_function(ex) = GeneralizedGenerated.mk_function(@__MODULE__, ex)

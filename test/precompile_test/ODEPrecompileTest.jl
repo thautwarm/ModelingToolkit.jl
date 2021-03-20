@@ -15,7 +15,7 @@ module ODEPrecompileTest
         de = ODESystem(eqs)
         return ODEFunction(de, [x,y,z], [σ,ρ,β]; kwargs...)
     end
-    
+
     # Build an ODEFunction as part of the module's precompilation. These cases
     # will not work, because the generated RGFs are put into the ModelingToolkit cache.
     const f_bad = system()
@@ -23,5 +23,12 @@ module ODEPrecompileTest
 
     # Setting eval_expression=false and eval_module=[this module] will ensure
     # the RGFs are put into our own cache, initialised below.
+    import GeneralizedGenerated: NGG
+    const RefValPool = NGG.RefValPool
+    const RefValIndex = NGG.RefValIndex
+    const ExprPool = NGG.ExprPool
+    const ExprIndex = NGG.ExprIndex
+    const CallPool = NGG.CallPool
+    const CallIndex = NGG.CallIndex
     const f_noeval_good = system(; eval_expression=false, eval_module=@__MODULE__)
 end

@@ -1,3 +1,25 @@
+# About ModelingToolKit.jl/GG backend
+
+ModelingToolkit.jl of [GG](https://github.com/JuliaStaging/GeneralizedGenerated.jl) backend requires using`Symbolics.jl` of GG backend:
+
+```julia
+] add https://github.com/thautwarm/Symbolics.jl
+```
+
+## Pros and Cons Using GG v0.3+ for MTK
+
+### Pros:
+
+GG v0.3 can compute the small common parts of values and cache them once, which significantly reduces startup latency and memory usage.
+
+For instance, multiple Julia expressions derived from `begin x = 1; y = begin x + 1 end end` but contains different line number nodes **can share nearly the same cache**. Only `LineNumberNode`s are stored and cached multiple times.
+
+### Cons:
+
+In order to share the same caches for more values from different packages, GG holds only one cache store which is inside GG itself. As a consequence, generated functions from GG **cannot get pre-compiled** at the caller packages.
+
+The cache store is runtime-specific, which means that GG functions do not work properly with serialization.
+
 # ModelingToolkit.jl
 
 [![Github Action CI](https://github.com/SciML/ModelingToolkit.jl/workflows/CI/badge.svg)](https://github.com/SciML/ModelingToolkit.jl/actions)
